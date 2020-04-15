@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5307694517736029978}
   - component: {fileID: 5307694517736029981}
-  - component: {fileID: 5307694517736029980}
   - component: {fileID: 5307694517736029983}
   m_Layer: 0
   m_Name: TriangleSprite
@@ -83,27 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &5307694517736029980
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5307694517736029982}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!60 &5307694517736029983
 PolygonCollider2D:
   m_ObjectHideFlags: 0

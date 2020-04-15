@@ -5,44 +5,83 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
-    private Vector2 _velocity;
+    [System.Serializable]
+    public class formeRoue
+    {
+        public GameObject shapeRoue;
+        public GameObject prefabShape;
+    }
 
+    [Header("Input")]
+    public KeyCode left;
+    public KeyCode right;
+    public KeyCode down;
+    public KeyCode up;
+    public KeyCode jump;
+    public KeyCode menu;
+
+    [Header ("Player Variables")]
     public float speed = 5f;
-
     [Range(1, 100)]
     public float jumpVelocity;
     public float myGravity;
-    private Vector2 velocityStock;
-    private bool isGravity = true;
-
-    private bool isJumping;
     public float countJump = 5.0f;
-    private float initialCount;
 
-
-    private bool isGrounded;
-    private List<GameObject> GroundColliders;
-
+    [Header("menu")]
     public GameObject roue;
+    public GameObject cible;
+    public formeRoue[] roueShape;
+
+    private Rigidbody2D _rigidbody;
+    private Vector2 _velocity;
+    private Vector2 velocityStock;
+    private Vector3 firstPosition;
+    private Vector3 firstScale;
+    private Color colorPlayer;
+
+
+    private bool isGravity = true;
+    private bool isJumping;
+    private bool isDone;
+    private bool isGrounded;
+
+    private List<GameObject> GroundColliders;
+    private float initialCount;
+    private int currentShape = 1;
+    private Dictionary<int, KeyCode[]> dicoKeys;
+   
+    
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         initialCount = countJump;
+        firstPosition = transform.position;
+        firstScale = transform.localScale;
+        dicoKeys = new Dictionary<int, KeyCode[]>();
+        dicoKeys.Add(0,new KeyCode[] { right, down });
+        dicoKeys.Add(1,new KeyCode[] { right, left });
+        dicoKeys.Add(2,new KeyCode[] { down, left });
+        dicoKeys.Add(3,new KeyCode[] { down, up });
+        dicoKeys.Add(4,new KeyCode[] { left, up });
+        dicoKeys.Add(5,new KeyCode[] { left, right });
+        dicoKeys.Add(6,new KeyCode[] { up, right });
+        dicoKeys.Add(7,new KeyCode[] { up, down });
+
+        colorPlayer = roueShape[0].shapeRoue.GetComponent<SpriteRenderer>().color;
+        cible.GetComponent<SpriteRenderer>().color = colorPlayer;
+        roueShape[currentShape].shapeRoue.transform.localScale *= 1.2f;
+        roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color= new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b,1);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (isGravity)
         {
-            float moveDirX = Input.GetAxis("Horizontal");
-            Vector2 moveDir = new Vector2(moveDirX, 0);
+            Move();
 
-            _rigidbody.velocity = new Vector2(moveDir.normalized.x * speed, _rigidbody.velocity.y);
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(jump))
             {
                 if (isGrounded)
                 {
@@ -64,13 +103,23 @@ public class PlayerController : MonoBehaviour
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y - (myGravity * Time.deltaTime));
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        else
+        {
+            cible.GetComponent<SpriteRenderer>().sprite = roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().sprite;
+            CheckInput();
+        }
+
+        if (Input.GetKeyDown(menu))
         {
             Choose();
         }
-        if (Input.GetKeyUp(KeyCode.Alpha0))
+        if (Input.GetKeyUp(menu))
         {
             Release();
+        }
+        if (transform.position.y < -5)
+        {
+            Death();
         }
     }
 
@@ -84,6 +133,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            Debug.Log(collision.gameObject.name);
             isGrounded = true;
             GroundColliders.Add(collision.gameObject);
         }
@@ -106,6 +156,7 @@ public class PlayerController : MonoBehaviour
         velocityStock = _rigidbody.velocity;
         _rigidbody.velocity *=0;
         isGravity = false;
+        cible.SetActive(true);
         roue.SetActive(true);
     }
 
@@ -113,8 +164,82 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.velocity = velocityStock;
         isGravity = true;
+        cible.SetActive(false);
         roue.SetActive(false);
+        GameObject forme = Instantiate(roueShape[currentShape].prefabShape, cible.transform.position, Quaternion.identity);
+        forme.GetComponent<SpriteRenderer>().color = colorPlayer;
     }
 
+    private void Death()
+    {
+        _rigidbody.velocity *= 0;
+        isGravity = true;
+        cible.SetActive(false);
+        roue.SetActive(false);
+        transform.position = firstPosition;
+    }
+
+    private void CheckInput()
+    {
+        if (Input.GetKeyDown(dicoKeys[currentShape][0]))
+        {
+            if (isDone)
+            {
+                isDone = false;
+            }
+            roueShape[currentShape].shapeRoue.transform.localScale *= 1 / 1.2f;
+            roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color = new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b, 199.0f / 255.0f);
+            if (currentShape != roueShape.Length - 1)
+            {
+                currentShape += 1;
+            }
+            else
+            {
+                currentShape = 0;
+            }
+            roueShape[currentShape].shapeRoue.transform.localScale *= 1.2f;
+            roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color = new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b, 1);
+        }
+
+        if (Input.GetKeyDown(dicoKeys[currentShape][1]))
+        {
+            if (isDone)
+            {
+                isDone = false;
+            }
+            roueShape[currentShape].shapeRoue.transform.localScale *= 1 / 1.2f;
+            roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color = new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b, 199.0f / 255.0f);
+            if (currentShape != 0)
+            {
+                currentShape -= 1;
+            }
+            else
+            {
+                currentShape = roueShape.Length - 1;
+            }
+            roueShape[currentShape].shapeRoue.transform.localScale *= 1.2f;
+            roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color = new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b, 1);
+        }
+    }
+
+    private void Move()
+    {
+        float moveDirX = 0;
+        if (Input.GetKey(left) && !Input.GetKey(right))
+        {
+            moveDirX = -1;
+            transform.localScale = new Vector3(-firstScale.x, firstScale.y, firstScale.z);
+            cible.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (Input.GetKey(right) && !Input.GetKey(left))
+        {
+            moveDirX = 1;
+            transform.localScale = firstScale;
+            cible.transform.localScale = new Vector3(1, 1, 1);
+        }
+        Vector2 moveDir = new Vector2(moveDirX, 0);
+
+        _rigidbody.velocity = new Vector2(moveDir.normalized.x * speed, _rigidbody.velocity.y);
+    }
 
 }
