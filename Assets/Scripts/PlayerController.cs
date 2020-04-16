@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
     public KeyCode jump;
     public KeyCode menu;
 
-    [Header ("Player Variables")]
+    [Header("Player Variables")]
+    public int id;
     public float speed = 5f;
     [Range(1, 100)]
     public float jumpVelocity;
@@ -49,11 +50,15 @@ public class PlayerController : MonoBehaviour
     private float initialCount;
     private int currentShape = 1;
     private Dictionary<int, KeyCode[]> dicoKeys;
-   
-    
+
+    [HideInInspector]
+    public bool stop;
+
+
 
     private void Awake()
     {
+        GroundColliders = new List<GameObject>();
         _rigidbody = GetComponent<Rigidbody2D>();
         initialCount = countJump;
         firstPosition = transform.position;
@@ -77,49 +82,56 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isGravity)
+        if (!stop)
         {
-            Move();
-
-            if (Input.GetKeyDown(jump))
+            if (isGravity)
             {
-                if (isGrounded)
+                Move();
+
+                if (Input.GetKeyDown(jump))
                 {
-                    Jump();
+                    if (isGrounded)
+                    {
+                        Jump();
+                    }
                 }
-            }
 
-            if (isJumping)
-            {
-                countJump -= Time.deltaTime;
-                if (countJump < 0)
+                if (isJumping)
                 {
-                    isJumping = false;
-                    countJump = initialCount;
+                    countJump -= Time.deltaTime;
+                    if (countJump < 0)
+                    {
+                        isJumping = false;
+                        countJump = initialCount;
+                    }
+                }
+                else
+                {
+                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y - (myGravity * Time.deltaTime));
                 }
             }
             else
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y - (myGravity * Time.deltaTime));
+                cible.GetComponent<SpriteRenderer>().sprite = roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().sprite;
+                CheckInput();
+            }
+
+            if (Input.GetKeyDown(menu))
+            {
+                Choose();
+            }
+            if (Input.GetKeyUp(menu))
+            {
+                Release();
+            }
+            if (transform.position.y < -5)
+            {
+                Death();
             }
         }
         else
         {
-            cible.GetComponent<SpriteRenderer>().sprite = roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().sprite;
-            CheckInput();
-        }
-
-        if (Input.GetKeyDown(menu))
-        {
-            Choose();
-        }
-        if (Input.GetKeyUp(menu))
-        {
-            Release();
-        }
-        if (transform.position.y < -5)
-        {
-            Death();
+            _rigidbody.velocity = Vector2.zero;
         }
     }
 
@@ -133,7 +145,6 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Debug.Log(collision.gameObject.name);
             isGrounded = true;
             GroundColliders.Add(collision.gameObject);
         }
