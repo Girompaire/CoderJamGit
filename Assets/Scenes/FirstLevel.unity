@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 156240148}
   - component: {fileID: 156240147}
   - component: {fileID: 156240146}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wall1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 314406714}
   m_Layer: 0
   m_Name: triangle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 353979596}
   m_Layer: 0
   m_Name: triangleRectangle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 539892277}
   - component: {fileID: 539892276}
   - component: {fileID: 539892275}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wall2
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -994,7 +994,7 @@ GameObject:
   - component: {fileID: 648933927}
   m_Layer: 0
   m_Name: triangleInverse
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1075,7 +1075,7 @@ GameObject:
   - component: {fileID: 652836154}
   m_Layer: 0
   m_Name: triangleInverse
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1582,7 +1582,7 @@ GameObject:
   - component: {fileID: 954089001}
   m_Layer: 0
   m_Name: triangle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1887,7 +1887,7 @@ GameObject:
   - component: {fileID: 1177181271}
   m_Layer: 0
   m_Name: carre
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1974,7 +1974,7 @@ GameObject:
   - component: {fileID: 1288491859}
   m_Layer: 0
   m_Name: triangleRectangleInverse
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2054,7 +2054,7 @@ GameObject:
   - component: {fileID: 1423936761}
   - component: {fileID: 1423936760}
   - component: {fileID: 1423936759}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Finish
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2229,7 +2229,7 @@ GameObject:
   - component: {fileID: 1437944190}
   m_Layer: 0
   m_Name: rectL
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2391,7 +2391,7 @@ GameObject:
   - component: {fileID: 1483716381}
   m_Layer: 0
   m_Name: carre
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2623,7 +2623,7 @@ GameObject:
   - component: {fileID: 1590434556}
   - component: {fileID: 1590434555}
   - component: {fileID: 1590434554}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Floor2
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2732,7 +2732,7 @@ GameObject:
   - component: {fileID: 1598937479}
   m_Layer: 0
   m_Name: circle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2886,7 +2886,7 @@ GameObject:
   - component: {fileID: 1629916899}
   m_Layer: 0
   m_Name: triangleRectangleInverse
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2967,7 +2967,7 @@ GameObject:
   - component: {fileID: 1631502510}
   m_Layer: 0
   m_Name: triangleRectangle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3047,7 +3047,7 @@ GameObject:
   - component: {fileID: 1642464075}
   - component: {fileID: 1642464074}
   - component: {fileID: 1642464073}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3236,7 +3236,7 @@ GameObject:
   - component: {fileID: 1659345173}
   - component: {fileID: 1659345172}
   - component: {fileID: 1659345171}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wall2 (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3345,7 +3345,7 @@ GameObject:
   - component: {fileID: 1697884928}
   m_Layer: 0
   m_Name: rectH
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3528,6 +3528,9 @@ MonoBehaviour:
   up: 122
   jump: 304
   menu: 102
+  powerErase: 97
+  powerFreeze: 101
+  Power03: 0
   id: 2
   speed: 5
   jumpVelocity: 5
@@ -3560,6 +3563,7 @@ MonoBehaviour:
   - shapeRoue: {fileID: 1697884926}
     prefabShape: {fileID: 5905908447370423484, guid: b4a030fb227af4f4db13c0ebbe1800d4,
       type: 3}
+  canFreeze: 0
   stop: 0
 --- !u!50 &1733359108
 Rigidbody2D:
@@ -3691,7 +3695,7 @@ GameObject:
   - component: {fileID: 1788484120}
   m_Layer: 0
   m_Name: rectL
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4027,7 +4031,7 @@ GameObject:
   - component: {fileID: 1894464987}
   m_Layer: 0
   m_Name: rectH
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4108,7 +4112,7 @@ GameObject:
   - component: {fileID: 1903709280}
   m_Layer: 0
   m_Name: circle
-  m_TagString: Untagged
+  m_TagString: ObjectClone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4297,6 +4301,9 @@ MonoBehaviour:
   up: 273
   jump: 303
   menu: 256
+  powerErase: 0
+  powerFreeze: 0
+  Power03: 0
   id: 1
   speed: 5
   jumpVelocity: 5
@@ -4329,6 +4336,7 @@ MonoBehaviour:
   - shapeRoue: {fileID: 1894464985}
     prefabShape: {fileID: 5905908447370423484, guid: b4a030fb227af4f4db13c0ebbe1800d4,
       type: 3}
+  canFreeze: 0
   stop: 0
 --- !u!50 &2044965732
 Rigidbody2D:
@@ -4447,7 +4455,7 @@ GameObject:
   - component: {fileID: 2112945514}
   m_Layer: 0
   m_Name: LD
-  m_TagString: Untagged
+  m_TagString: LevelDesign
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

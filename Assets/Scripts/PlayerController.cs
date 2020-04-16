@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     public KeyCode jump;
     public KeyCode menu;
 
+    public KeyCode powerErase;
+    public KeyCode powerFreeze;
+    public KeyCode Power03;
+
+
     [Header("Player Variables")]
     public int id;
     public float speed = 5f;
@@ -45,16 +50,25 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private bool isDone;
     private bool isGrounded;
+    public bool canFreeze;
 
     private List<GameObject> GroundColliders;
     private float initialCount;
     private int currentShape = 1;
     private Dictionary<int, KeyCode[]> dicoKeys;
+    private float freezeCooldown = 10f;
+    private float freezeDuration= 2f;
+
+    private RaycastHit2D hit;
 
     [HideInInspector]
     public bool stop;
 
 
+    private void Start()
+    {
+
+    }
 
     private void Awake()
     {
@@ -77,6 +91,8 @@ public class PlayerController : MonoBehaviour
         cible.GetComponent<SpriteRenderer>().color = colorPlayer;
         roueShape[currentShape].shapeRoue.transform.localScale *= 1.2f;
         roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color= new Color(roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.r, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.g, roueShape[currentShape].shapeRoue.GetComponent<SpriteRenderer>().color.b,1);
+
+        canFreeze = true;
     }
 
 
@@ -124,6 +140,16 @@ public class PlayerController : MonoBehaviour
             {
                 Release();
             }
+            if (Input.GetKeyDown(powerErase))
+            {
+                //hit = Physics2D.Raycast(transform.position + new Vector3(1, 0, 0), transform.right);
+                erase();
+            }
+            if (Input.GetKeyDown(powerFreeze) & canFreeze)
+            {
+                canFreeze = false;
+                freezeOtherPlayer();
+            }
             if (transform.position.y < -5)
             {
                 Death();
@@ -132,6 +158,32 @@ public class PlayerController : MonoBehaviour
         else
         {
             _rigidbody.velocity = Vector2.zero;
+        }
+
+    }
+
+
+    private void erase()
+    {
+        if (hit.collider != null)
+        {
+            if (hit.collider.tag == "Ground" && hit.collider.gameObject.layer != 5) 
+            {
+                Destroy(hit.collider.gameObject);
+            }
+        }
+    }
+    private void freezeOtherPlayer()
+    {
+        GameObject[] otherPlayer;
+        otherPlayer = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject item in otherPlayer)
+        {
+            if(item.GetComponent<PlayerController>().id != this.gameObject.GetComponent<PlayerController>().id)
+            {
+                StartCoroutine(freezeActionCooldown());
+                StartCoroutine(freezeTimer(item));
+            }
         }
     }
 
@@ -241,16 +293,42 @@ public class PlayerController : MonoBehaviour
             moveDirX = -1;
             transform.localScale = new Vector3(-firstScale.x, firstScale.y, firstScale.z);
             cible.transform.localScale = new Vector3(-1, 1, 1);
+            hit = Physics2D.Raycast(transform.position + new Vector3(-1, 0, 0), transform.right,5);
         }
         else if (Input.GetKey(right) && !Input.GetKey(left))
         {
             moveDirX = 1;
             transform.localScale = firstScale;
             cible.transform.localScale = new Vector3(1, 1, 1);
+            hit = Physics2D.Raycast(transform.position + new Vector3(1, 0, 0), transform.right,5);
+            
         }
         Vector2 moveDir = new Vector2(moveDirX, 0);
 
         _rigidbody.velocity = new Vector2(moveDir.normalized.x * speed, _rigidbody.velocity.y);
+    }
+
+    private IEnumerator freezeActionCooldown()
+    {
+       float  elapsed = 0f;
+       while(elapsed < freezeCooldown)
+       {
+           yield return null;
+           elapsed += Time.deltaTime;
+       }
+        canFreeze = true;
+    }
+
+    private IEnumerator freezeTimer(GameObject cible)
+    {
+        cible.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        float elapsed = 0f;
+        while (elapsed < freezeDuration)
+        {
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        cible.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
     }
 
 }
