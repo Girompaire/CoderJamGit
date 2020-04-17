@@ -41,9 +41,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Vector2 _velocity;
     private Vector2 velocityStock;
-    private Vector3 firstPosition;
+    public Vector3 firstPosition;
     private Vector3 firstScale;
-    private Color colorPlayer;
+    public Color colorPlayer;
 
 
     private bool isGravity = true;
