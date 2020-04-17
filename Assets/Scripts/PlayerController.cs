@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
     private bool isDone;
     private bool isGrounded;
     public bool canFreeze;
+    public bool facingRight;
+    public bool facingLeft;
+
 
     private List<GameObject> GroundColliders;
     private float initialCount;
@@ -60,7 +63,6 @@ public class PlayerController : MonoBehaviour
     private float freezeDuration= 2f;
 
     private RaycastHit2D hit;
-
     [HideInInspector]
     public bool stop;
 
@@ -103,6 +105,7 @@ public class PlayerController : MonoBehaviour
             if (isGravity)
             {
                 Move();
+                raycast();
 
                 if (Input.GetKeyDown(jump))
                 {
@@ -285,6 +288,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void raycast()
+    {
+        if(facingRight == true)
+        {
+            hit = Physics2D.Raycast(transform.position + new Vector3(1, 0, 0), transform.right);
+            Debug.DrawRay(transform.position + new Vector3(1, 0, 0), transform.right);
+
+        }
+        if (facingLeft == true)
+        {
+            hit = Physics2D.Raycast(transform.position + new Vector3(-1, 0, 0), transform.right *-1);
+            Debug.DrawRay(transform.position + new Vector3(-1, 0, 0), transform.right *-1);
+
+        }
+
+    }
+
     private void Move()
     {
         float moveDirX = 0;
@@ -293,15 +313,16 @@ public class PlayerController : MonoBehaviour
             moveDirX = -1;
             transform.localScale = new Vector3(-firstScale.x, firstScale.y, firstScale.z);
             cible.transform.localScale = new Vector3(-1, 1, 1);
-            hit = Physics2D.Raycast(transform.position + new Vector3(-1, 0, 0), transform.right,5);
+            facingLeft = true; facingRight = false;
+            //hit = Physics2D.Raycast(transform.position + new Vector3(-1, 0, 0), transform.right,10);
         }
         else if (Input.GetKey(right) && !Input.GetKey(left))
         {
             moveDirX = 1;
             transform.localScale = firstScale;
             cible.transform.localScale = new Vector3(1, 1, 1);
-            hit = Physics2D.Raycast(transform.position + new Vector3(1, 0, 0), transform.right,5);
-            
+            facingLeft = false; facingRight = true;
+            //hit = Physics2D.Raycast(transform.position + new Vector3(1, 0, 0), transform.right,10);
         }
         Vector2 moveDir = new Vector2(moveDirX, 0);
 

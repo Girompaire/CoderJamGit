@@ -83,10 +83,10 @@ public class RandomPower : MonoBehaviour
         {
             if (item.GetComponent<PlayerController>().id != cible.gameObject.GetComponent<PlayerController>().id)
             {
-                Transform cibleLastPosition = cible.transform;
+                Vector3 cibleLastPosition = cible.transform.position;
 
                 cible.transform.position = item.transform.position;
-                item.transform.position = cibleLastPosition.transform.position;
+                item.transform.position = cibleLastPosition;
 
             }
         }
